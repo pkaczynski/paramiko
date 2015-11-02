@@ -90,7 +90,6 @@ class SFTPClient(BaseSFTP, ClosingContextManager):
         self._cwd = None
         # request # -> SFTPFile
         self._expecting = weakref.WeakValueDictionary()
-        self.encoding = encoding
         if type(sock) is Channel:
             # override default logger
             transport = self.sock.get_transport()
