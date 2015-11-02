@@ -90,6 +90,7 @@ class SFTPClient(BaseSFTP, ClosingContextManager):
         self._cwd = None
         # request # -> SFTPFile
         self._expecting = weakref.WeakValueDictionary()
+        self.encoding = encoding
         if type(sock) is Channel:
             # override default logger
             transport = self.sock.get_transport()
@@ -205,8 +206,8 @@ class SFTPClient(BaseSFTP, ClosingContextManager):
                 raise SFTPError('Expected name response')
             count = msg.get_int()
             for i in range(count):
-                filename = msg.get_text()
-                longname = msg.get_text()
+                filename = _to_unicode(msg.get_string())
+                longname = _to_unicode(msg.get_string())
                 attr = SFTPAttributes._from_msg(msg, filename, longname)
                 if (filename != '.') and (filename != '..'):
                     filelist.append(attr)
