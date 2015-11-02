@@ -203,7 +203,7 @@ class Message (object):
         
         These are trivially encoded as comma-separated values in a string.
         """
-        return self.get_text(encoding=encoding).split(',')
+        return self.get_text().split(',')
 
     def add_bytes(self, b):
         """
